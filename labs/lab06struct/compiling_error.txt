@@ -1,0 +1,7 @@
+/Users/yeeunlee/Documents/GitHub/starter/labs/lab06struct/struct.cpp:42:14: warning: alias declarations are a C++11 extension [-Wc++11-extensions]
+using pCar = Car* ;
+             ^
+/Users/yeeunlee/Documents/GitHub/starter/labs/lab06struct/struct.cpp:84:7: error: cannot use dot operator on a type
+                pCar.model=GetString("Enter a model : ");
+                    ^
+1 warning and 1 error generated.

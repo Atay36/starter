@@ -1,0 +1,25 @@
+/Users/yeeunlee/Documents/GitHub/starter/hw/pset02/sortDriver1.cpp:136:14: error: no matching function for call to 'insertionSort'
+                        case 'i': insertionSort(*list,N);
+                                  ^~~~~~~~~~~~~
+/Users/yeeunlee/Documents/GitHub/starter/hw/pset02/sortDriver1.cpp:33:6: note: candidate function not viable: no known conversion from 'int' to 'int *' for 1st argument; remove *
+void insertionSort(int *list, int n);
+     ^
+/Users/yeeunlee/Documents/GitHub/starter/hw/pset02/sortDriver1.cpp:137:14: error: no matching function for call to 'selectionSort'
+                        case 's': selectionSort(*list,N);
+                                  ^~~~~~~~~~~~~
+/Users/yeeunlee/Documents/GitHub/starter/hw/pset02/sortDriver1.cpp:35:6: note: candidate function not viable: no known conversion from 'int' to 'int *' for 1st argument; remove *
+void selectionSort(int *list, int n);
+     ^
+/Users/yeeunlee/Documents/GitHub/starter/hw/pset02/sortDriver1.cpp:138:14: error: no matching function for call to 'quickSort'
+                        case 'q': quickSort(*list,N);
+                                  ^~~~~~~~~
+/Users/yeeunlee/Documents/GitHub/starter/hw/pset02/sortDriver1.cpp:34:6: note: candidate function not viable: no known conversion from 'int' to 'int *' for 1st argument; remove *
+void quickSort(int *list, int n);
+     ^
+/Users/yeeunlee/Documents/GitHub/starter/hw/pset02/sortDriver1.cpp:165:4: error: no matching function for call to 'printList'
+                        printList(*list, N, max_print, per_line);
+                        ^~~~~~~~~
+/Users/yeeunlee/Documents/GitHub/starter/hw/pset02/sortDriver1.cpp:83:6: note: candidate function not viable: no known conversion from 'int' to 'int *' for 1st argument; remove *
+void printList(int *list, int N, int max_print, int per_line) {
+     ^
+4 errors generated.
