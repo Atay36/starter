@@ -1,3 +1,6 @@
+/*On my honor, I pledge that I have neither received nor provided improper assistance in the completion of this assignment.
+Signed: yeeun Section: 02 Student Number: 21800546
+*/
 //  listnode.cpp
 //  Created by idebtor@gmail.com on December 12, 2018.
 /*
@@ -63,6 +66,11 @@ pNode push_front(pNode p, int val) {
 // first node of the list. This effectively increases the list size by one.
 pNode push_back(pNode p, int val) {
 	DPRINT(cout << "><push_back val=" << val << endl;);
+
+	if(p==nullptr){
+		return new Node{val,p};
+	}
+
 	pNode x=p;
 	while(x->next!=nullptr)
 		x=x->next;
@@ -80,18 +88,19 @@ pNode push_back(pNode p, int val) {
 pNode push(pNode p, int val, int x) {
 	if (empty(p)) return push_front(p, val);
 	if (p->item == x) return push_front(p, val);
-
 	pNode curr = p;
 	pNode prev = nullptr;
 
-	while(curr->item!=x){
-		prev = curr;
-		curr = curr->next;
+		while(curr!=nullptr&&curr->item!=x){
+			prev = curr;
+			curr = curr->next;
+
+		}
+	if(curr!=nullptr){
+		prev->next=new Node {val,curr};
 	}
+		//cout << "your code here \n";
 
-	prev->next=new Node {val,curr};
-
-	cout << "your code here \n";
 	return p;
 }
 
@@ -124,7 +133,7 @@ pNode pop_front(pNode p) {
 	p=p->next;
 	delete x;
 
-	cout << "your code here \n";
+	//cout << "your code here \n";
 
 	return p;
 }
@@ -157,7 +166,34 @@ pNode pop_back(pNode p) {
 pNode pop_backN(pNode p, int N) {
 	DPRINT(cout << ">pop_backN N=" << N << endl;);
 
-	cout << "your code here \n";
+	if (empty(p)) return nullptr;
+	const int num = size(p);
+
+	pNode x=p;
+	pNode y=nullptr;
+	pNode z=nullptr;
+
+	if(num<=N){
+		clear(p);
+		return nullptr;
+	}
+
+	// cout<<"size : "<<num<<endl;
+	// cout<<"N : "<<N<<endl;
+
+	for(int i=0;i<=num-N;i++){
+		z=y;
+		y=x;
+		x=x->next;
+	}
+	z->next=nullptr;
+	cout<< "z : "<<z->item<<endl;
+	while(x->next!=nullptr){
+		delete y;
+		y=x;
+		x=x->next;
+	}
+	//cout << "your code here \n";
 
 	DPRINT(cout << "<pop_backN size=" << size(p) << endl);
 	return p;
@@ -171,13 +207,15 @@ pNode pop(pNode p, int val) {
 	if (p->item == val) return pop_front(p);
 	pNode curr = p;
 	pNode prev = nullptr;
-	while(curr->item!=val){
-		prev=curr;
-		curr=curr->next;
-	}
 
-	prev->next=curr->next;
-	delete curr;
+		while(curr!=nullptr&&curr->item!=val){
+			prev=curr;
+			curr=curr->next;
+		}
+		if(curr!=nullptr){
+			prev->next=curr->next;
+			delete curr;
+		}
 
 	cout << "your code here \n";
 
@@ -211,7 +249,7 @@ void show(pNode p, bool all) {
 	// print the first pmax items
 	cout << p->item << endl;
 	//cout << "your code here \n";
-	for (i = 1, curr = p; i<=10; curr = curr->next, i++) {
+	for (i = 1, curr = p; i<=pmax; curr = curr->next, i++) {
 		cout << " -> " << curr->item;
 		if (i % pmax == 0) cout << endl;
 	}
@@ -219,10 +257,10 @@ void show(pNode p, bool all) {
 	cout << "\n...left out...\n";
 	// print the last pmax items
 	// move the pointer to the place where pmax items are left.
-	for (i = 11; i<N-10; i++)
+	for (i = 11; i<N-pmax; i++)
 		curr = curr->next;
 
-	for (i = 1; i<=10; curr = curr->next, i++) {
+	for (i = 1; i<=pmax; curr = curr->next, i++) {
 		cout << " -> " << curr->item;
 		if (i % pmax == 0) cout << endl;
 	}
