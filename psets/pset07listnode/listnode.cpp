@@ -24,10 +24,11 @@ pNode clear(pNode p) {
 	while (curr != nullptr) {
 		pNode prev = curr;
 		curr = curr->next;
-		cout << prev->item << " ";
+		//cout << prev->item << " ";
 		delete prev;
 	}
-	cout << "\tcleard \tHappy Coding~~\n";
+	cout << "\tAll things are cleared."<<endl;
+	//cout << "\tcleard \tHappy Coding~~\n";
 	return nullptr;
 }
 
@@ -168,7 +169,7 @@ pNode pop_backN(pNode p, int N) {
 
 	if (empty(p)) return nullptr;
 	const int num = size(p);
-
+	int a=1;
 	pNode x=p;
 	pNode y=nullptr;
 	pNode z=nullptr;
@@ -185,14 +186,22 @@ pNode pop_backN(pNode p, int N) {
 		z=y;
 		y=x;
 		x=x->next;
+
 	}
 	z->next=nullptr;
-	cout<< "z : "<<z->item<<endl;
+	//cout<< "z : "<<z->item<<endl;
 	while(x->next!=nullptr){
 		delete y;
 		y=x;
 		x=x->next;
+		cout << "\r\tdeleting in [" << num-a-2<< "]                           ";
+		a++;
 	}
+	//cout << "\r\tdeleting in [" << num-N << "]";
+
+
+
+	//cout << "\tdeleting in ["<<num-N-1<<"]"<<endl;
 	//cout << "your code here \n";
 
 	DPRINT(cout << "<pop_backN size=" << size(p) << endl);
