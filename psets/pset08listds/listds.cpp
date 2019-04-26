@@ -1,3 +1,5 @@
+/*On my honour, I pledge that I have neither received nor provided improper assistance in the completion of this assignment. Signed: 이예은
+*/
 /**
 * File: listdsx.cpp, listds.h
 *       implements a doubly linked list with sentinel nodes
@@ -45,19 +47,19 @@ pNode begin(pList p) {
 	return p->head->next;
 }
 
-// returns the tail node referring to the past -the last- node in the list. 
-// The past -the last- node is the sentinel node which is used only as a sentinel 
+// returns the tail node referring to the past -the last- node in the list.
+// The past -the last- node is the sentinel node which is used only as a sentinel
 // that would follow the last node. It does not point to any node next, and thus
-// shall not be dereferenced. Because the way we are going use during the iteration, 
-// we don't want to include the node pointed by this. this function is often used 
-// in combination with List::begin to specify a range including all the nodes in 
-// the list. This is a kind of simulated used in STL. If the container is empty, 
+// shall not be dereferenced. Because the way we are going use during the iteration,
+// we don't want to include the node pointed by this. this function is often used
+// in combination with List::begin to specify a range including all the nodes in
+// the list. This is a kind of simulated used in STL. If the container is empty,
 // this function returns the same as List::begin.
 pNode end(pList p) {
 	return p->tail;          // not tail->next
 }
 
-// returns true if the list is empty, false otherwise. 
+// returns true if the list is empty, false otherwise.
 // To clear a list, see List::clear.
 bool empty(pList p) {
 	return begin(p) == end(p);
@@ -72,8 +74,8 @@ int size(pList p) {
 
 // removes from the list a single node x given.
 // This effectively reduces the container by one which is destroyed.
-// It is specifically designed to be efficient inserting and removing 
-// a node regardless of its positions in the list such as front, back 
+// It is specifically designed to be efficient inserting and removing
+// a node regardless of its positions in the list such as front, back
 // or in the middle of the list.
 pNode erase(pList p, pNode x) {
 	if (x == nullptr) return x;
@@ -106,14 +108,14 @@ void insert(pList p, pNode x, int val) {
 }
 
 // removes the first node in the list.
-// This destroys the removed node, and reduces its size by one. 
+// This destroys the removed node, and reduces its size by one.
 void pop_front(pList p) {
 	DPRINT(cout << ">pop_front\n";);
 	if (!empty(p)) erase(p, begin(p));
 	DPRINT(cout << "<pop_front\n";);
 }
 
-// removes the last node in the list, and reduces the list size 
+// removes the last node in the list, and reduces the list size
 // by one. This destroys the removed node.
 void pop_back(pList p) {
 	DPRINT(cout << ">pop_back\n";);
@@ -122,8 +124,8 @@ void pop_back(pList p) {
 }
 
 // removes the first node with val from the list and does nothing if not found.
-// Unlike member function List::erase which erases a node by its position, 
-// this function removes a node by its value.  
+// Unlike member function List::erase which erases a node by its position,
+// this function removes a node by its value.
 // Unlike pop(), pop_all() removes all the nodes with the value given.
 void pop(pList p, int val) {
 	DPRINT(cout << ">pop val=" << val << endl;);
@@ -133,18 +135,18 @@ void pop(pList p, int val) {
 
 // removes from the list all the nodes with the same value given.
 // This calls the destructor of these objects and reduces the list size
-// by the number of nodes removed.  Unlike erase(), which erases a node 
-// by its position, this function removes nodes by its value. 
+// by the number of nodes removed.  Unlike erase(), which erases a node
+// by its position, this function removes nodes by its value.
 // Unlike pop_all(), pop() removes the first occurrence of the node with
-// the value given. 
+// the value given.
 void pop_all(pList p, int val) {
 	DPRINT(cout << ">pop_all val=" << val << endl;);
 	cout << "your code here \n";
 	DPRINT(cout << "<pop_all\n";);
 }
 
-// deletes N number of nodes, starting from the end. 
-// It deletes all the nodes if N is zero which is the default or out of 
+// deletes N number of nodes, starting from the end.
+// It deletes all the nodes if N is zero which is the default or out of
 // the range of the list.
 // Since it simply calls pop_back() which is O(1) repeatedly, it is O(n).
 void pop_backN(pList p, int N) {
@@ -167,7 +169,7 @@ void push_front(pList p, int val) {		// inserts a node at front of list
 	DPRINT(cout << "<push_front\n";);
 }
 
-// adds a new node with val at the end of the list and returns the 
+// adds a new node with val at the end of the list and returns the
 // first node of the list. This effectively increases the list size by one.
 void push_back(pList p, int val) {
 	DPRINT(cout << ">push_back val=" << val << endl;);
@@ -177,7 +179,7 @@ void push_back(pList p, int val) {
 
 // inserts a new node with val at the position of the node with x.
 // The new node is actually inserted in front of the node with x.
-// It returns the first node of the list. 
+// It returns the first node of the list.
 // This effectively increases the container size by one.
 void push(pList p, int val, int x) {
 	DPRINT(cout << ">push val=" << val << endl;);
@@ -207,7 +209,7 @@ void push_backN(pList p, int N) {
 // removes extra nodes that have duplicate values from the list.
 // It removes all but the last node from every consecutive group of
 // equal nodes in the list. Notice that a node is only removed from
-// the list if it compares equal to the node immediately preceding it. 
+// the list if it compares equal to the node immediately preceding it.
 // Thus, this function is especially useful for sorted lists. O(n)
 void unique(pList p) {
 	DPRINT(cout << ">unique N=" << size(p) << endl;);
@@ -218,16 +220,16 @@ void unique(pList p) {
 	DPRINT(cout << "<unique";);
 }
 
-// reverses the order of the nodes in the list. 
-// The entire operation does not involve the construction, destruction 
+// reverses the order of the nodes in the list.
+// The entire operation does not involve the construction, destruction
 // or copy of any element object. Nodes are not moved, but pointers
 // are moved within the list. O(n)
 void reverse(pList p) {
 	DPRINT(cout << ">reverse\n";);
 	if (size(p) <= 1) return;
 
-	// hint: swap prev and next in every node including head & tail  
-	// then, swap head and tail.  
+	// hint: swap prev and next in every node including head & tail
+	// then, swap head and tail.
 	// hint: use while loop, don't use begin()/end()
 
 	cout << "your code here \n";
@@ -281,8 +283,8 @@ bool sorted(pList p) {
 }
 
 // returns a new list of nodes sorted in ascending order if not sorted.
-// If the list is already sorted, it simply reverses the list such that 
-// the ascending ordered list becomes a descending order list and 
+// If the list is already sorted, it simply reverses the list such that
+// the ascending ordered list becomes a descending order list and
 // vice versa.   O(n)
 pList sort(pList p) {
 	DPRINT(cout << ">sort N=" << size(p) << endl;);
@@ -313,9 +315,9 @@ void push_sortedN(pList p, int N) {
 }
 
 
-// shows the values of all the nodes in the list if all is true or 
-// the list size is less than pmax * 2. If there are more than 
-// (pmax * 2) nodes, then it shows only pmax number of nodes from 
+// shows the values of all the nodes in the list if all is true or
+// the list size is less than pmax * 2. If there are more than
+// (pmax * 2) nodes, then it shows only pmax number of nodes from
 // the beginning and the end in the list.
 void show(pList p, bool all) {
 	DPRINT(cout << "show(" << size(p) << ")\n";);
