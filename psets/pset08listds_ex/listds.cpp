@@ -13,6 +13,9 @@
 *    most of memeber functions defined in std::List.
 */
 
+/*Include the following line at the top of your every file with your name signed. On my honour, I pledge that I have neither received nor provided improper assistance in the completion of this assignment. Signed: 이예은
+ */
+
 #include <iostream>
 #include <cassert>
 #include <iomanip>
@@ -47,9 +50,20 @@ pNode last(pList p) {
 pNode half(pList p) {
 
 	cout << "your code here. ";
+    pNode node = p ->head;
+    for(int i=0; i <size(p);i++){
+        node = node -> next;
+    }
 
-	return nullptr;
+	return node;
 }
+//
+//int size(pList p) {
+//    if (empty(p)) return 0;
+//    int count = 0;
+//    for (pNode c = p->head; c != p->tail; c = c->next, count++);
+//    return count;
+//}
 
 // returns the first node with val found, the tail sentinel node 
 // returned by end(p) if not found. O(n)
@@ -93,8 +107,10 @@ bool empty(pList p) {
 // returns the number of nodes in the list container.
 int size(pList p) {
 	int count = 0;
-	for (pNode c = begin(p); c != end(p); c = c->next)
+    for (pNode c = begin(p); c != end(p); c = c->next){
 		count++;
+        //DPRINT(cout <<">>"<< c->item <<endl;);
+    }
 	return count;
 }
 
@@ -106,10 +122,10 @@ int size(pList p) {
 // The new node is actually inserted in front of the node x.
 // This effectively increases the list size by one. O(1)
 void insert(pNode x, int val) {
-	DPRINT(cout << ">insert val=" << val << endl;);
+	//DPRINT(cout << ">insert val=" << val << endl;);
 	pNode node = new Node{ val, x->prev, x };
 	x->prev = x->prev->next = node;
-	DPRINT(cout << "<insert\n";);
+	//DPRINT(cout << "<insert\n";);
 }
 
 // removes from the list a single node x given.
@@ -153,7 +169,21 @@ void pop_back(pList p) {
 void pop(pList p, int val) {
 	DPRINT(cout << ">pop val=" << val << endl;);
 	cout << "your code here\n";
-
+    
+    pNode node = find(p, val);
+    
+    if (node == p->tail || node == p->head)
+        return;
+    
+    erase(node);
+    
+    
+//    if(curr!=nullptr){
+//        pNode prev = curr->prev;
+//    }
+//
+//    prev -> next = curr -> next;
+//
 	DPRINT(cout << "<pop\n";);
 }
 
@@ -165,15 +195,28 @@ void pop(pList p, int val) {
 void pop_all(pList p, int val) {
 	DPRINT(cout << ">pop_all val=" << val << endl;);
 	cout << "your code here\n";
-#if 0
+#if 1
 	// O(n) 
-	for (pNode c = begin(p); c != end(p); c = c->next) {
-
-
-	}
+    for (pNode c = begin(p); c != end(p); c = c->next) {
+        if (c->item==val){ // 현재 노드가 다음 노드의 값과 같으면 지움.
+            pNode node = c->prev;
+            erase(c);
+            c = node;    // 지우고 나면 c 노드가 사라지니까 이전 노드로 돌려서 건너뛰는 일이 없도록 방지해야 함
+        }
+    }
+        pNode a = begin(p);
+        if(a->item==val) erase(a);
+        
+//        // remove all occurrences of nodes with val given in the list. void pop_all(pList p, int val) {
+//        for (pNode c = begin(p); c != end(p); c = c->next)
+//          if (c->item == val)
+//            erase(c);
+//    } // with bugs
+        
+    
 #endif
 
-#if 1
+#if 0
 	// O(n^2)
 	while (find(p, val) != end(p)) {
 		pop(p, val);
@@ -210,9 +253,9 @@ void push_front(pList p, int val) {		// inserts a node at front of list
 // adds a new node with val at the end of the list and returns the 
 // first node of the list. O(1)
 void push_back(pList p, int val) {
-	DPRINT(cout << ">push_back val=" << val << endl;);
+	//DPRINT(cout << ">push_back val=" << val << endl;);
 	insert(end(p), val);
-	DPRINT(cout << "<push_back\n";);
+	//DPRINT(cout << "<push_back\n";);
 }
 
 // inserts a new node with val at the position of the node with x.
@@ -222,6 +265,14 @@ void push_back(pList p, int val) {
 void push(pList p, int val, int x) {
 	DPRINT(cout << ">push val=" << val << endl;);
 	cout << "your code here\n";
+    
+    pNode node = find(p, x);
+    
+    if (node == p->tail || node == p->head)
+        return;
+    
+    insert(node,val);
+    
 	DPRINT(cout << "<push\n";);
 }
 
@@ -237,7 +288,7 @@ void push_backN(pList p, int N, int val) {
 		int range = N + psize;
 		srand((unsigned)time(NULL));
 		for (int i = 0; i < N; i++) {
-			int val = (rand() * RAND_MAX + rand()) % range;
+			int val = rand() % range;
 			push_back(p, val);
 			if (i % 10000 == 0)
 				cout << setw(7) << "\r\tinserting in [" << i + psize << "]=" << val << "        ";
@@ -264,7 +315,16 @@ void push_backN(pList p, int N, int val) {
 void unique(pList p) {
 	DPRINT(cout << ">unique N=" << size(p) << endl;);
 	if (size(p) <= 1) return;
-
+    
+    for (pNode c = begin(p); c->next != end(p); c = c->next) {
+        if (c->item == c->next->item)
+        {
+            pNode node = c->prev;
+            erase(c);
+            c = node;        
+        }
+    }
+    
 	cout << "your code here\n";
 
 	DPRINT(cout << "<unique";);
@@ -277,7 +337,37 @@ void unique(pList p) {
 void reverse(pList p) {
 	DPRINT(cout << ">reverse\n";);
 	if (size(p) <= 1) return;
+    pNode node = p->head;
+    pNode a=nullptr;
+    pNode head=p->head;
+    pNode tail=p->tail;
+    while(node->next!=nullptr){
+       
+        swap(node->next,node->prev);
+        node=node->prev;
+        cout<<node->item<<endl;
+//        a= node->prev;
+//        node->prev = node -> next;
+//        node->next = a;
+//        node = node->prev;
+    }
+    a= p->head;
+    p->head=p->tail;
+    p->tail=a;
+    
+    swap(p->head->next,p->head->prev);
+    swap(p->tail->next,p->tail->prev);
 
+
+    
+//    p->head=tail;
+//    p->tail=head;
+//
+//    p->head->prev=nullptr;
+//    p->tail->next=nullptr;
+    
+    //cout << begin(p)->item <<endl;
+    
 	// hint: swap prev and next in every node including head & tail  
 	// then, swap head and tail.  
 	// hint: use while loop, don't use begin()/end()
@@ -290,10 +380,56 @@ void reverse(pList p) {
 // returns so called "perfectly shuffled" list. 
 // The first half and the second half are interleaved each other. 
 // The shuffled list begins with the second half of the original p.
-// For example, 1234567890 returns 617283940.
+// For example, 1234567890 returns 6172839405.
 void shuffle(pList p) {
 	DPRINT(cout << ">shuffle\n";);
 	if (size(p) <= 1) return;    // nothing to shuffle
+    
+    int half = size(p)/2;
+    
+    //cout << "half : " << a->item<< endl;
+    
+    pList prev = new List;
+    pNode b = p->head->next;
+    
+    pNode q=p->head;
+    pNode save;
+   // pList curr = new List;
+    
+   // pNode begin = p->head;
+    pNode c = p->head->next;
+    for(int i =0; i<half;i++){
+        push_back(prev, c->item);
+        erase(c);
+        c = c->next;
+    }
+    //cout << "prev : ";
+    //show(prev);
+    pNode add = prev->head->next;
+
+    
+    for(;add->next!=nullptr;q = q->next->next){
+        save = add->next;
+        add -> prev = b;
+        add -> next = b->next;
+        
+        add->prev = q;
+        add->next = q-> next;
+        
+        q->next->prev = add;
+        q->next = add;
+        
+        
+        add = save;
+        
+        
+    }
+    //cout << "end : ";
+
+    //show(p);
+    
+    
+
 
 	// find the mid node of the list p to split it into two lists.
 	// remove 1st half from the list p, and keep it as a list "que". 
@@ -307,7 +443,7 @@ void shuffle(pList p) {
 	// interleave nodes in the "que" into "mid" in the list of p.
 	// start inserting 1st node in "que" at 2nd node in "mid".
 
-	cout << "your code here\n";
+	//cout << "your code here\n";
 
 	DPRINT(cout << "<shuffle\n";);
 }
@@ -345,9 +481,14 @@ bool sorted(pList p) {
 // returns true if sorted according to comp fp provided
 bool sorted(pList p, int(*comp)(int a, int b)) {
 	DPRINT(cout << ">sorted?\n";);
-	if (size(p) <= 1) return true;
-
-	cout << "your code here\n";
+    if (size(p) <= 1) return true;
+    
+    for (pNode c = begin(p); c->next != end(p); c = c->next) {
+        if (comp(c->item, c->next->item)>0){        // 현재 노드가 다음 노드의 값과 같으면 지움.
+            return false;
+        }
+    }
+	//cout << "your code here\n";
 
 	DPRINT(cout << "<sorted: true\n";);
 	return true;
@@ -357,6 +498,23 @@ bool sorted(pList p, int(*comp)(int a, int b)) {
 void push_sorted(pList p, int val) {
 	DPRINT(cout << "<push_sorted val=" << val << endl;);
 	cout << "your code here\n";
+    
+    pNode nodeb = begin(p);
+    pNode nodee = end(p);
+    
+    
+    if (sorted(p, ascending)){
+        while(nodeb!=nullptr && nodeb->item < val){
+            nodeb=nodeb->next;
+        }
+        insert(nodeb, val);
+        
+    } else {
+        while(nodee!=nullptr && nodee->item > val){
+            nodee=nodee->next;
+        }
+        insert(nodee->prev, val);
+    }
 	DPRINT(cout << "<push_sorted\n";);
 }
 
@@ -376,13 +534,26 @@ void push_sortedN(pList p, int N) {
 	srand((unsigned)time(NULL));	// initialize random seed
 
 	cout << "your code here\n";
-#if 0
+#if 1
 	// O(n^2) implment your code here for O(n^2)
 	// Refer to push_sorted(), but don't invoke push_sorted().
+    bool a=sorted(p, ascending);
+    
+    for (int i = 0; i < N; i++) {
+        int val = rand() % range;
+        if (a) {
+            pNode node = _more(p, val);
+            insert(node, val);
+        }
+        else {
+            pNode node = _less(p, val);
+            insert(node, val);
+        }
+    }
 
 #endif
 
-#if 1
+#if 0
 	// O(n^3) Don't implement somethig like this, but in O(n^2).
 	for (int i = 0; i < N; i++) {
 		int val = (rand() * RAND_MAX + rand()) % range;

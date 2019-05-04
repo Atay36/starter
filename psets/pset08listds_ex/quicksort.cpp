@@ -39,7 +39,7 @@ int partition(int list[], int lo, int hi, int(*comp)(int, int)) {
 void _quickSort(int *list, int lo, int hi, int N, int(*comp)(int, int)) {
 	if (lo < hi) 	{
 		int pi = partition(list, lo, hi, comp); // Partitioning index
-		DPRINT(for (int x = 0; x < N; x++) cout << list[x] << " "; cout << endl;);
+		//DPRINT(for (int x = 0; x < N; x++) cout << list[x] << " "; cout << endl;);
 		_quickSort(list, lo, pi - 1, N, comp);
 		_quickSort(list, pi + 1, hi, N, comp);
 	}

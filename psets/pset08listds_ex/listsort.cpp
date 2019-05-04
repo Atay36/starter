@@ -2,6 +2,9 @@
 // A typical recursive implementation of quick sort
 // 2018.12.15
 
+/*Include the following line at the top of your every file with your name signed. On my honour, I pledge that I have neither received nor provided improper assistance in the completion of this assignment. Signed: 이예은
+ */
+
 #include <iostream>
 #include "listds.h"
 using namespace std;
@@ -61,7 +64,7 @@ void bubbleSort(pList p, int(*comp)(int, int)) {
 				swapped = true;
 			}
 		}
-		DPRINT(show(p, false););
+		//DPRINT(show(p, false););
 		tail = curr;
 	}
 	DPRINT(cout << "<bubbleSort N=" << size(p) << endl;);
@@ -84,7 +87,7 @@ void bubbleSort2(pList p, int(*comp)(int, int)) {
 			}
 			curr = curr->next;
 		}
-		DPRINT(show(p, false););
+		//DPRINT(show(p, false););
 		tail = curr;
 	} while (swapped);
 	DPRINT(cout << "<bubbleSort N=" << size(p) << endl;);
@@ -92,11 +95,23 @@ void bubbleSort2(pList p, int(*comp)(int, int)) {
 
 void selectionSort(pList p, int(*comp)(int, int)) {
 	DPRINT(cout << ">selectionSort N=" << size(p) << endl;);
+    
+    pNode node;
+    
+    for (pNode c = begin(p); c != end(p); c = c->next) {
+        node = c;
+        for (pNode d = c; d != end(p); d = d->next) {
+            if(comp(node->item, d->item)>0){
+                node = d;
+            }
+        }
+    
+    swap(c->item,node->item);
 
-	cout << "your code here\n";
+	//cout << "your code here\n";
 
-	DPRINT(cout << "<selctionSort N=" << size(p) << endl;);
-}
+	//DPRINT(cout << "<selctionSort N=" << size(p) << endl;);
+    }
 
 /** for your reference 
 void selectionSort(int *list, int n) {
@@ -112,4 +127,5 @@ void selectionSort(int *list, int n) {
 	}
 }
 */
+}
 
