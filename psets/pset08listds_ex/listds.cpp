@@ -345,7 +345,7 @@ void reverse(pList p) {
        
         swap(node->next,node->prev);
         node=node->prev;
-        cout<<node->item<<endl;
+        //cout<<node->item<<endl;
 //        a= node->prev;
 //        node->prev = node -> next;
 //        node->next = a;
@@ -372,7 +372,7 @@ void reverse(pList p) {
 	// then, swap head and tail.  
 	// hint: use while loop, don't use begin()/end()
 
-	cout << "your code here\n";
+	//cout << "your code here\n";
 	
 	DPRINT(cout << "<reverse\n";);
 }
@@ -599,6 +599,62 @@ void push_sortedNlog(pList p, int N) {
 	int psize = size(p);
 	int range = N + psize;
 	int* vals = new int[N];
+
+    
+    
+    for(int i=0;i<N;i++){
+        vals[i]=rand()%range;
+    }
+    
+    quickSort(vals, N);
+    pNode node = p->head;
+    
+    if(sorted(p,ascending)){
+    
+        
+        int j=0;
+        
+        while(j!=N&&node->next != nullptr){
+            
+            if(node->item < vals[j]){
+                node = node->next;
+            } else{
+                insert(node, vals[j]);
+                j++;
+            }
+            
+        }
+        
+        if(j!=N){
+            for(;j<N;j++){
+                insert(end(p), vals[j]);
+            }
+        }
+    } else if(sorted(p,descending)){
+        int j=N-1;
+        node = node->next;
+        while(j!=-1&&node->next != nullptr){
+            
+            if(node->item > vals[j]){
+                node = node->next;
+            } else{
+                insert(node, vals[j]);
+                j--;
+            }
+            
+        }
+        
+        if(j!=-1){
+            for(;j>=0;j--){
+                insert(end(p), vals[j]);
+            }
+        }
+        
+        
+    }
+    
+    //p->tail = node ->next;
+    
 
 	cout << "your code here\n";
 
