@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		650D03422285C704001F8546 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 650D03412285C704001F8546 /* main.cpp */; };
 		6560F8242285DBDF00ADA839 /* treeprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6560F8212285DBDE00ADA839 /* treeprint.cpp */; };
 		6560F8252285DBDF00ADA839 /* tree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6560F8222285DBDF00ADA839 /* tree.cpp */; };
 		6560F8262285DBDF00ADA839 /* treeDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6560F8232285DBDF00ADA839 /* treeDriver.cpp */; };
+		6560F8292285DE2400ADA839 /* libnowic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6560F8282285DE2400ADA839 /* libnowic.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,10 +27,11 @@
 
 /* Begin PBXFileReference section */
 		650D033E2285C703001F8546 /* pset_tree */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = pset_tree; sourceTree = BUILT_PRODUCTS_DIR; };
-		650D03412285C704001F8546 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		6560F8212285DBDE00ADA839 /* treeprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = treeprint.cpp; path = ../treeprint.cpp; sourceTree = "<group>"; };
 		6560F8222285DBDF00ADA839 /* tree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tree.cpp; path = ../tree.cpp; sourceTree = "<group>"; };
 		6560F8232285DBDF00ADA839 /* treeDriver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = treeDriver.cpp; path = ../treeDriver.cpp; sourceTree = "<group>"; };
+		6560F8282285DE2400ADA839 /* libnowic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnowic.a; path = ../../../lib/libnowic.a; sourceTree = "<group>"; };
+		6560F82A2285DE4600ADA839 /* nowic.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = nowic.lib; path = ../../../lib/nowic.lib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6560F8292285DE2400ADA839 /* libnowic.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,6 +54,7 @@
 				6560F8212285DBDE00ADA839 /* treeprint.cpp */,
 				650D03402285C703001F8546 /* pset_tree */,
 				650D033F2285C703001F8546 /* Products */,
+				6560F8272285DE2400ADA839 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,9 +69,17 @@
 		650D03402285C703001F8546 /* pset_tree */ = {
 			isa = PBXGroup;
 			children = (
-				650D03412285C704001F8546 /* main.cpp */,
 			);
 			path = pset_tree;
+			sourceTree = "<group>";
+		};
+		6560F8272285DE2400ADA839 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6560F82A2285DE4600ADA839 /* nowic.lib */,
+				6560F8282285DE2400ADA839 /* libnowic.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,7 +138,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				650D03422285C704001F8546 /* main.cpp in Sources */,
 				6560F8242285DBDF00ADA839 /* treeprint.cpp in Sources */,
 				6560F8252285DBDF00ADA839 /* tree.cpp in Sources */,
 				6560F8262285DBDF00ADA839 /* treeDriver.cpp in Sources */,
