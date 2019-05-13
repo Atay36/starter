@@ -83,7 +83,7 @@ int value(tree t) {
 // frees all nodes while traversing the tree like postorder
 tree clear(tree t) {
 	if (t == nullptr) return nullptr;
-	
+    	
 	cout << "your code here\n";
 
 	return nullptr;
