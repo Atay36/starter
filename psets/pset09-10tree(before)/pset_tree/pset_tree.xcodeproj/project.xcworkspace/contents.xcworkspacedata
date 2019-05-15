@@ -2,6 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:pset_tree.xcodeproj">
+      location = "group:../../../pset09-10tree/tree.cpp">
+   </FileRef>
+   <FileRef
+      location = "group:../../../pset09-10tree/treeDriver.cpp">
+   </FileRef>
+   <FileRef
+      location = "group:../../../pset09-10tree/treeprint.cpp">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>
