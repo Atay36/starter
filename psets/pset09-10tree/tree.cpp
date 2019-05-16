@@ -194,17 +194,25 @@ tree trim(tree root, int key) {
     } else {
         if (root->left == nullptr) {
             DPRINT(cout << ">trim: step3: "  << endl;);
-
-            root->right=trim(root->right,key);
-
-            return root->right;
+            
+            tree rightnode = root->right;
+            delete root;
+            //root->right=trim(root->right,key);
+            //delete root->right;
+            root=rightnode;
+            return root;
                     // your code here – trim the right one, return root
         }
         else if (root->right == nullptr) {
-            root->left=trim(root->left,key);
+            
+            tree leftnode = root->left;
+            delete root;
+            root=leftnode;
+            
+            //root->left=trim(root->left,key);
             DPRINT(cout << ">trim: step4: "  << endl;);
-
-            return root->left;
+           // delete root->left;
+            return root;
                     // your code here – trim the left one, return root
         }
         else {// two children case
@@ -231,10 +239,67 @@ tree trim(tree root, int key) {
 }
 // removes the node with the key in a tree and returns the new root
 tree trimplus(tree root, int key) {
-	if (root == nullptr) return root;	 // base case
-	DPRINT(cout << ">trimplus: now we are at: " << root->key << endl;);
+    int num;
+    if (root == nullptr) return root;     // base case
+    DPRINT(cout << ">trim: now we are at: " << root->key << endl;);
+    if (key < root->key){
+        DPRINT(cout << ">trim: step1: "  << endl;);
+        
+        root->left = trimplus(root->left, key);
+        
+    } else if (key > root->key) {
+        DPRINT(cout << ">trim: step2: "  << endl;);
+        
+        root->right = trimplus(root->right, key);
+        
+    } else {
+        if (root->left == nullptr) {
+            DPRINT(cout << ">trim: step3: "  << endl;);
+            
+            tree rightnode = root->right;
+            delete root;
+            //root->right=trim(root->right,key);
+            //delete root->right;
+            root=rightnode;
+            return root;
+            // your code here – trim the right one, return root
+        }
+        else if (root->right == nullptr) {
+            
+            tree leftnode = root->left;
+            delete root;
+            root=leftnode;
+            
+            //root->left=trim(root->left,key);
+            DPRINT(cout << ">trim: step4: "  << endl;);
+            // delete root->left;
+            return root;
+            // your code here – trim the left one, return root
+        }
+        else {// two children case
+            // get the successor: smallest in right subtree
+            DPRINT(cout << ">trim: step5: "  << endl;);
+            int right_height=height(find(root,key)->right);
+            int left_height=height(find(root,key)->left);
+            
+            cout << "right height : "<< right_height << endl;
+            cout << "left height : "<< left_height << endl;
 
-	cout << "your code here\n";
+
+            if(left_height>right_height){
+                num=pred(root)->key;
+            } else num = succ(root)->key;
+            trimplus(root,num);
+            root->key = num;
+            
+            // copy the successor's content to this "root" node
+            if((root->left==nullptr)||(root->right==nullptr)){
+                DPRINT(cout << ">trim: step6: "  << endl;);
+                
+                //trim(root, key);
+            }
+            // trim the successor recursively, which has one or no child case
+        } }
 
 	DPRINT(if (root != nullptr) cout << "<trimplus returns: key=" << root->key << endl;);
 	DPRINT(if (root == nullptr) cout << "<trimplus returns: nullptr)\n";);
