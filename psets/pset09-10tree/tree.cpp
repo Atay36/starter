@@ -92,25 +92,58 @@ int value(tree t) {
 // frees all nodes while traversing the tree like postorder
 tree clear(tree t) {
 	if (t == nullptr) return nullptr;
-	
-	//cout << "your code here\n";
 
+    if((t->left!=nullptr)&&(t->right!=nullptr)){
+        cout << "step 2"<< endl;
+        cout << "now key : "<<t->key<< endl;
+        
+        t->left = clear(t->left);
+        
+        assert(t->left == nullptr);
+        
+        cout << "step 2-1"<< endl;
+        cout << "now key : "<<t->key<< endl;
+    }
+    if(t->left==nullptr){
+        cout << "step 3"<< endl;
+        cout << "now key : "<<t->key<< endl;
+        
+        t->right=clear(t->right);
+        assert(t->right == nullptr);
+        cout << "step 3-1"<< endl;
+        cout << "now key : "<<t->key<< endl;
+    }
+    else if(t->right==nullptr){
+        cout << "step 4"<< endl;
+        cout << "now key : "<<t->key<< endl;
+
+        t->left=clear(t->left);
+        assert(t->left == nullptr);
+        cout << "step 4-1"<< endl;
+        cout << "now key : "<<t->key<< endl;
+    }
+    
+    if((t->left==nullptr)&&(t->right==nullptr)) {
+        cout << "step 1"<< endl;
+        cout << "now key : "<<t->key<< endl;
+        
+        delete t;
+        return nullptr;
+    }
 	return nullptr;
 }
 
 // does there exist a node with given key?
 // search a key in binary search tree(BST) recursively.
 bool contains(tree node, int key) {
-	if (empty(node)) return false;
+    if (node == nullptr) return false;
     
-    if (node->key==key) return true;
-    if (node->key!=key) contains(node->right, key);
-    if (node->key!=key) contains(node->left, key);
+    if (key  == node->key) return true;
     
-    //cout << "your code here\n";
-
-
-	return false;
+    if (key  <  node->key)
+        return contains(node->left, key);
+    
+    return contains(node->right, key);
 }
 
 // does there exist a node with given key?
@@ -403,7 +436,7 @@ void levelorder(tree node, vector<int>& v) {
     }
 
     
-	cout << "your code here\n";
+	//cout << "your code here\n";
 
 	DPRINT(cout << "<levelorder size=" << v.size() << endl;);
 }
