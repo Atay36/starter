@@ -468,7 +468,7 @@ bool isBST(tree root) {
 	int max = value(maximum(root));
 	return _isBST(root, min-1, max+1);    // to check the same key add -/+ 1
 }
-
+ 
 ///////////   testing code  ///////////////////////////////////////
 // While doing Inorder traversal, we can keep track of previously
 // visited node. If the value of the currently visited node is
