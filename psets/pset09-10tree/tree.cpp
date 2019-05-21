@@ -206,6 +206,8 @@ tree grow(tree node, int key) {
 	return node;    // eventually returns the original root node
 }
 
+
+
 ///////////////////////////////////////////////////////////////////
 // trim
 ///////////////////////////////////////////////////////////////////
@@ -329,6 +331,7 @@ tree trimplus(tree root, int key) {
             if((root->left==nullptr)||(root->right==nullptr)){
                 DPRINT(cout << ">trim: step6: "  << endl;);
                 
+                
                 //trim(root, key);
             }
             // trim the successor recursively, which has one or no child case
@@ -356,13 +359,13 @@ tree pred(tree node) {
 // Given a binary search tree, return the min or max key in the tree.
 // Don't need to traverse the entire tree.
 tree maximum(tree node) {			// returns max node
-    if(node->right==nullptr) return node;
+    if(node == nullptr || node->right==nullptr) return node;
 	//cout << "your code here\n";
 	return maximum(node->right);
 }
 
 tree minimum(tree node) {			// returns min node
-    if(node->left==nullptr) return node;
+    if(node== nullptr || node->left==nullptr) return node;
     //cout << "your code here\n";
     return minimum(node->left);
 }
@@ -415,21 +418,24 @@ void preorder(tree node, vector<int>& v) {
 // Use std::queue to store the nodes during traverse the tree.
 void levelorder(tree node, vector<int>& v) {
 	DPRINT(cout << ">levelorder";);
+    
     queue<tree> que;
     if (!node) return;
     que.push(node);
-    tree temp;
-    while (node){
-        temp = node;
+    tree temp=node;
+    while (temp){
+        //temp = node;
+        que.push(node);
+
         if(node->left!=nullptr) que.push(node->left);
         if(node->right!=nullptr) que.push(node->right);
 
-        //if (que.empty()) return 0;
-        
-        node = que.front();
-        
+        if (que.empty()) return ;
+
+        temp = que.front();
+
         que.pop();
-        
+    
         //3. if its left child is not null, enqueue it.
         //4. if its right child is not null, enqueue it.
         //5. que.pop() – remove the node in the queue.
@@ -449,15 +455,22 @@ void levelorder(tree node, vector<int>& v) {
 bool _isBST(tree x, int min, int max) {
 	if (x == nullptr) return true;
 	DPRINT(cout << ">_isBST key=" << x->key << "\t min=" << min << " max=" << max << endl;);
-    
-    if((x->key<max)&&(x->key>min)) {
-        _isBST(x->right, value(minimum(x->right)), value(maximum(x->right)));
-        _isBST(x->left, value(minimum(x->left)), value(maximum(x->left)));
+
+    if((x->key > max)||(x->key < min)) {
+        return false;
     }
-	cout << "your code here\n";
+    
+//    int min_right = minimum(x->right)->key-1;
+//    int max_left = maximum(x->left)->key+1;
+    if( x->right != nullptr && x->left != nullptr ){
+        
+    }
+    return _isBST(x->right, x->key+1, max) && _isBST(x->left, min, x->key-1);
+    
+	//cout << "your code here\n";
 
 	DPRINT(cout << "<_isBST key=" << x->key << "\t min=" << min << " max=" << max << endl;);
-	return false;
+	//return false;
 }
 
 // returns true if the tree is a binary search tree, otherwise false.  
@@ -467,6 +480,7 @@ bool isBST(tree root) {
 	int min = value(minimum(root));
 	int max = value(maximum(root));
 	return _isBST(root, min-1, max+1);    // to check the same key add -/+ 1
+    
 }
  
 ///////////   testing code  ///////////////////////////////////////
@@ -527,52 +541,33 @@ void randomN(int* arr, int N, int start) {
 // on the current menu status.
 // If it is empty, the key values to add ranges from 0 to N-1.
 // If it is not empty, it ranges from (max+1) to (max+1 + N).
-tree growN(tree root, int N, bool AVLtree) {
-	DPRINT(cout << ">growN N=" << N << endl;);
-	int start = empty(root) ? 0 : value(maximum(root)) + 1;
-
-	int* arr = new (nothrow) int[N];
-	assert(arr != nullptr);
-	randomN(arr, N, start);
-
-	// using a function pointer
-	tree(*func)(tree root, int key) = AVLtree ? growAVL : grow;
-	for (int i = 0; i < N; i++)
-		root = func(root, arr[i]);
-
-	delete[] arr;
-	DPRINT(cout << "<growN size=" << size(root) << endl;);
-	return root;
+tree growN(tree root, int N, bool AVLtree) { // recode tree.cpp
+    int start = empty(root) ? 0 : value(maximum(root)) + 1;
+    
+    int* arr = new (nothrow) int[N];
+    assert(arr != nullptr);
+    randomN(arr, N, start);
+    
+    for (int i = 0; i < N; i++) root = grow(root, arr[i]);
+    
+    if (AVLtree) root = rebalanceTree(root);
+    
+    delete[] arr;
+    return root;
 }
 
 // removes randomly N numbers of nodes in the tree(AVL or BST).
 // It gets N node keys from the tree, trim one by one randomly.
 tree trimN(tree root, int N, bool AVLtree) {
-	DPRINT(cout << ">trimN N=" << N << endl;);
-	vector<int> vec; 
-	inorder(root, vec);
-	shuffle(vec.data(), vec.size());
-
-	int tsize = size(root);
-	assert(vec.size() == tsize);   // make sure we've got them all
-
-	int count = N > tsize ? tsize : N;
-
-	/* instead of the following code
-	if (AVLtree)
-		for (int i = 0; i < count; i++)
-			root = trimAVL(root, vec[i]);
-	else
-		for (int i = 0; i < count; i++)
-			root = trim(root, vec[i]);
-	*/
-	// use function pointers
-	tree (*func)(tree root, int key) = AVLtree ? trimAVL : trim;
-	for (int i = 0; i < count; i++)
-		root = func(root, vec[i]);
-
-	DPRINT(cout << "<trimN size=" << size(root) << endl;);
-	return root;
+    vector<int> vec;
+    inorder(root, vec);
+    shuffle(vec.data(), vec.size());
+    int tsize = size(root);
+    assert(vec.size() == tsize);   // make sure we've got them all
+    int count = N > tsize ? tsize : N;
+    for (int i = 0; i < count; i++) root = trim(root, vec[i]);
+    if (AVLtree) root = rebalanceTree(root);
+    return root;
 }
 
 ////////////////////////// AVL Tree ///////////////////////////////
@@ -674,8 +669,23 @@ tree _rebalanceTree(tree node) {
 tree rebalanceTree(tree node) { // may need a better solution here
 	DPRINT(cout << ">rebalanceTree " << endl;);
 	if (node == nullptr) return nullptr;
+    
+    int bf = balanceFactor(node);
+    if (bf >= 2) {
 
-	cout << "your code here\n";
+        if (balanceFactor(node->left) >= 1)
+            node = rotateLL(node);
+        else
+            node = rotateLR(node);
+        }
+        else if (bf <= -2) {
+           
+            if (balanceFactor(node->right) <= -1) node = rotateRR(node);
+            else
+                node = rotateRL(node);
+        }
+
+	//cout << "your code here\n";
 
 	DPRINT(cout << "<rebalanceTree " << endl;);
 	return node;
@@ -687,11 +697,11 @@ tree rebalanceTree(tree node) { // may need a better solution here
 // this works in O(1), instead of O(log n)
 tree growAVL(tree node, int key) {
 	DPRINT(cout << ">growAVL key=" << key << endl;);
-	if (node == nullptr) return new TreeNode(key);
-
-	cout << "your code here\n";
-
-	return nullptr;
+    grow(node,key);
+    
+    // your code here
+    return rebalance(node);
+	// cout << "your code here\n";
 }
 #endif
 
@@ -700,9 +710,9 @@ tree trimAVL(tree node, int key) {
 	DPRINT(cout << ">trimAVL key=" << key << " at " << node->key << endl;);
 
 	// step 1 - BST trim as usual
-
-	cout << "your code here\n";
-
+    trim(node,key);
+	//cout << "your code here\n";
+    return rebalance(node);
 	// step 2 - get the balance factor of this node
 	DPRINT(if (node != nullptr)
 		cout << "<trimAVL key=" << key << " is done, now rebalance at " << node->key << endl;);
