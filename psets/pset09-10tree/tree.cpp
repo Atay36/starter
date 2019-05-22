@@ -63,7 +63,7 @@ int height(tree node) {
     
     int left = height(node->left);
     int right = height(node->right);
-	cout << "your code here\n";
+	//cout << "your code here\n";
     
 
     return max(left, right) + 1;
@@ -74,7 +74,7 @@ int height(tree node) {
 int size(tree node) {
 	if (node == nullptr) return 0;
 
-	cout << "your code here\n";
+	//cout << "your code here\n";
     
     return size(node->left) + size(node->right) + 1;
     
@@ -94,38 +94,38 @@ tree clear(tree t) {
 	if (t == nullptr) return nullptr;
 
     if((t->left!=nullptr)&&(t->right!=nullptr)){
-        cout << "step 2"<< endl;
-        cout << "now key : "<<t->key<< endl;
+        //cout << "step 2"<< endl;
+        //cout << "now key : "<<t->key<< endl;
         
         t->left = clear(t->left);
         
         assert(t->left == nullptr);
         
-        cout << "step 2-1"<< endl;
-        cout << "now key : "<<t->key<< endl;
+        //cout << "step 2-1"<< endl;
+        //cout << "now key : "<<t->key<< endl;
     }
     if(t->left==nullptr){
-        cout << "step 3"<< endl;
-        cout << "now key : "<<t->key<< endl;
+        //cout << "step 3"<< endl;
+        //cout << "now key : "<<t->key<< endl;
         
         t->right=clear(t->right);
         assert(t->right == nullptr);
-        cout << "step 3-1"<< endl;
-        cout << "now key : "<<t->key<< endl;
+        //cout << "step 3-1"<< endl;
+        //cout << "now key : "<<t->key<< endl;
     }
     else if(t->right==nullptr){
-        cout << "step 4"<< endl;
-        cout << "now key : "<<t->key<< endl;
+        //cout << "step 4"<< endl;
+        //cout << "now key : "<<t->key<< endl;
 
         t->left=clear(t->left);
         assert(t->left == nullptr);
-        cout << "step 4-1"<< endl;
-        cout << "now key : "<<t->key<< endl;
+        //cout << "step 4-1"<< endl;
+        //cout << "now key : "<<t->key<< endl;
     }
     
     if((t->left==nullptr)&&(t->right==nullptr)) {
-        cout << "step 1"<< endl;
-        cout << "now key : "<<t->key<< endl;
+        //cout << "step 1"<< endl;
+        //cout << "now key : "<<t->key<< endl;
         
         delete t;
         return nullptr;
@@ -266,7 +266,7 @@ tree trim(tree root, int key) {
                         // trim the successor recursively, which has one or no child case
                     } }
     
-	cout << "your code here\n";
+	//cout << "your code here\n";
 
 	DPRINT(if (root != nullptr) cout << "<trim returns: key=" << root->key << endl;);
 	DPRINT(if (root == nullptr) cout << "<trim returns: nullptr)\n";);
@@ -374,7 +374,7 @@ tree minimum(tree node) {			// returns min node
 // back through the argument v which is passed by reference. 
 void inorder(tree node, vector<int>& v) {
 	DPRINT(cout << ">inorder size=" << v.size() << endl;);
-	cout << "your code here\n";
+	//cout << "your code here\n";
     
     if (node == nullptr) return;
     inorder(node->left,v);
@@ -635,18 +635,23 @@ tree rotateRL(tree node) {
 // returns the node that may be different from the input node
 tree rebalance(tree node) {
 	DPRINT(cout << ">rebalance at:" << node->key << endl;);
-
-	cout << "your code here\n";
-
-#ifdef DEBUG
-	treeprint(node);
-	cout << " Need rebalancing at " << node->key << endl;
-#endif
-
-	cout << "your code here\n";
+    
+        int bf = balanceFactor(node);
+        if (bf >= 2) {
+            if (balanceFactor(node->left) >= 1)
+                node = rotateLL(node);
+            else
+                node = rotateLR(node);
+            }
+            else if (bf <= -2) {
+                // LL // LR
+                if (balanceFactor(node->right) <= -1) node = rotateRR(node);
+                else
+                    node = rotateRL(node);
+            }
+            return node;
 
 	DPRINT(cout << "<rebalance returning" << endl;);
-	return node;
 }
 
 // rebalances AVL tree at the root just once;
@@ -666,30 +671,38 @@ tree _rebalanceTree(tree node) {
 	return node;
 }
 
+tree buildAVL(int* v, int n) {
+    if (n <= 0) return nullptr;
+    
+    int mid = n/2;
+    
+    tree newTree = new TreeNode(*(v+mid));
+    newTree->left = buildAVL(v, mid);
+    newTree->right = buildAVL(v+mid+1, n-mid-1);
+    // construct and set a TreeNode and initial values, use the [mid] element of v.
+    // your code here – recursive buildAVL() calls for left & right
+    // from 0 to mid-1 (or mid number of nodes)
+    return newTree;
+}
+
 tree rebalanceTree(tree node) { // may need a better solution here
 	DPRINT(cout << ">rebalanceTree " << endl;);
-	if (node == nullptr) return nullptr;
+    if (node == nullptr) return nullptr;
+    // you may use inorder() to get an array of keys or nodes
+    vector<int> v;
+    inorder(node, v);
     
-    int bf = balanceFactor(node);
-    if (bf >= 2) {
-
-        if (balanceFactor(node->left) >= 1)
-            node = rotateLL(node);
-        else
-            node = rotateLR(node);
-        }
-        else if (bf <= -2) {
-           
-            if (balanceFactor(node->right) <= -1) node = rotateRR(node);
-            else
-                node = rotateRL(node);
-        }
-
+    // if you use an array of nodes, you just reconstructs AVL tree using nodes.
+    clear(node);
+    // if you use an array of keys, the root should be cleared (or deallocated)
+    
+    // your code here // O(n)
+    return buildAVL(v.data(), v.size()); // O(n)
 	//cout << "your code here\n";
 
 	DPRINT(cout << "<rebalanceTree " << endl;);
-	return node;
 }
+
 
 
 #if 1
@@ -697,8 +710,12 @@ tree rebalanceTree(tree node) { // may need a better solution here
 // this works in O(1), instead of O(log n)
 tree growAVL(tree node, int key) {
 	DPRINT(cout << ">growAVL key=" << key << endl;);
-    grow(node,key);
+    if (node == nullptr) return new TreeNode(key);
     
+    if (key < node->key)    // recur down the tree
+        node->left = growAVL(node->left, key);
+    else if (key > node->key)
+        node->right = growAVL(node->right, key);
     // your code here
     return rebalance(node);
 	// cout << "your code here\n";
@@ -710,9 +727,59 @@ tree trimAVL(tree node, int key) {
 	DPRINT(cout << ">trimAVL key=" << key << " at " << node->key << endl;);
 
 	// step 1 - BST trim as usual
-    trim(node,key);
-	//cout << "your code here\n";
-    return rebalance(node);
+    int num;
+    if (node == nullptr) return node;     // base case
+    DPRINT(cout << ">trim: now we are at: " << node->key << endl;);
+    if (key < node->key){
+        DPRINT(cout << ">trim: step1: "  << endl;);
+        
+        node->left = trimAVL(node->left, key);
+        
+    } else if (key > node->key) {
+        DPRINT(cout << ">trim: step2: "  << endl;);
+        
+        node->right = trimAVL(node->right, key);
+        
+    } else {
+        if (node->left == nullptr) {
+            DPRINT(cout << ">trim: step3: "  << endl;);
+            
+            tree rightnode = node->right;
+            delete node;
+            //root->right=trim(root->right,key);
+            //delete root->right;
+            node=rightnode;
+            return node;
+            // your code here – trim the right one, return root
+        }
+        else if (node->right == nullptr) {
+            
+            tree leftnode = node->left;
+            delete node;
+            node=leftnode;
+            
+            //root->left=trim(root->left,key);
+            DPRINT(cout << ">trim: step4: "  << endl;);
+            // delete root->left;
+            return node;
+            // your code here – trim the left one, return root
+        }
+        else {// two children case
+            // get the successor: smallest in right subtree
+            DPRINT(cout << ">trim: step5: "  << endl;);
+            num = succ(node)->key;
+            trimAVL(node,num);
+            node->key = num;
+            
+            // copy the successor's content to this "root" node
+            if((node->left==nullptr)||(node->right==nullptr)){
+                DPRINT(cout << ">trim: step6: "  << endl;);
+                
+                //trim(root, key);
+            }
+            // trim the successor recursively, which has one or no child case
+        } }	//cout << "your code here\n";
+    //return rebalance(node);
 	// step 2 - get the balance factor of this node
 	DPRINT(if (node != nullptr)
 		cout << "<trimAVL key=" << key << " is done, now rebalance at " << node->key << endl;);
