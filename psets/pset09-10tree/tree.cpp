@@ -419,30 +419,20 @@ void preorder(tree node, vector<int>& v) {
 void levelorder(tree node, vector<int>& v) {
 	DPRINT(cout << ">levelorder";);
     
-    queue<tree> que;
-    if (!node) return;
+    queue<tree> que;  // using stl
+    tree temp;
     que.push(node);
-    tree temp=node;
-    while (temp){
-        //temp = node;
-        que.push(node);
-
-        if(node->left!=nullptr) que.push(node->left);
-        if(node->right!=nullptr) que.push(node->right);
-
-        if (que.empty()) return ;
-
-        temp = que.front();
-
+    while(!que.empty()){
+        temp=que.front();
         que.pop();
-    
-        //3. if its left child is not null, enqueue it.
-        //4. if its right child is not null, enqueue it.
-        //5. que.pop() – remove the node in the queue.
+        v.push_back(temp->key);  //process node
+        
+        if(temp->left)
+            que.push(temp->left); //EnQueue
+        if(temp->right)
+            que.push(temp->right); //EnQueue
+        
     }
-
-    
-	//cout << "your code here\n";
 
 	DPRINT(cout << "<levelorder size=" << v.size() << endl;);
 }
