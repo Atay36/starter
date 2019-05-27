@@ -173,6 +173,7 @@ void swap(heap p, int i, int j) {
 
 void swim(heap p, int k) {
 	DPRINT(cout << " swim key=" << p->nodes[k] << " k=" << k << " N=" << p->N << endl;);
+    
 	cout << "your code here\n";
 }
 

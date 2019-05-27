@@ -28,6 +28,8 @@
 #include <queue>
 #include "heap.h"
 #include "treenode.h"
+#include <math.h>
+
 
 void treeprint(tree t);
 

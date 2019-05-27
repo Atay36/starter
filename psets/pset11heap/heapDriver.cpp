@@ -65,7 +65,7 @@ void heapprint_mode(heap hp, int mode) {
 		heapprint_levelorder(hp);
 	}
 }
-
+# if 0
 int main(int argc, char* argv[]) {
 	string menuMax = "Max Heap(Priority Queue): ";
 	string menuMin = "Min Heap(Priority Queue): ";
@@ -181,4 +181,5 @@ int main(int argc, char* argv[]) {
 	clear(hp);
 	cout << "\tJoyful Coding^^\n";
 }
+#endif
 

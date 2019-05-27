@@ -52,12 +52,18 @@ bool more(Key* a, int i, int j) {
 	return a[i] > a[j];
 }
 
+void swap(Key* p, int i, int j) {
+    swap(p[i], p[j]);  // using std::swap()
+}
+
 void swim(Key* a, int k, int N) {
 	DPRINT(cout << ">swim key=" << a[k] << " @ k=" << k << " N=" << N << endl;);
 	int k_saved = k;
 
-	cout << "your code here\n";
-
+    while (k > 1 && !comp(a, k / 2, k)){
+        swap(a, k / 2, k);
+        k = k / 2;
+    }
 	cout << "   N=" << N << " k=" << k_saved << " ";
 	for (int i = 1; i <= N; i++) cout << a[i] << " ";
 	cout << endl;
@@ -67,7 +73,17 @@ void sink(Key * a, int k, int N) {
 	DPRINT(cout << ">sink key=" << a[k] << " @ k=" << k << " N=" << N << endl;);
 	int k_saved = k;
 
-	cout << "your code here\n";
+	//cout << "your code here\n";
+    while (2 * k <= N)
+    {
+        int j = 2 * k;
+        if (j < N && comp(a, j, j + 1)) j++;
+        
+        if (!comp(a, k, j)) break;
+        
+        swap(a, k, j);
+        k = j;
+    }
 
 	cout << "   N=" << N << " k=" << k_saved << " ";
 	for (int i = 1; i <= N; i++) cout << a[i] << " ";
@@ -79,8 +95,14 @@ void heapsort(Key * a, int N) {
 	// 1st pass: restore the max heap property
 	// start 'sink' at the last internal node and go up.
 	cout << "1st pass(heapify - O(n)) begins:\n";
-
-	cout << "your code here\n";
+    
+	//cout << "your code here\n";
+    k=N/2;
+    while(k>=1){
+        sink(a,k,N);
+        k--;
+    }
+   
 
 	cout << "HeapOrdered: ";
 
@@ -90,13 +112,28 @@ void heapsort(Key * a, int N) {
 	// 2nd pass: get the max out (from root while N > 1)
 	// repeat 'swap and sink' at the root while decrementing N.
 	cout << "2nd pass(swap and sink - n * O(log n) begins:\n";
-
-	cout << "your code here\n";
+    int num=N;
+    while(num>1)
+    {
+        swap(a,1,num);
+        sink(a,1,num-1);
+        num--;
+    }
+//    if(a[N]>a[N*2]||a[N]>a[N*2+1]){
+//        if(a[N*2]>a[N*2+1]){
+//            swap(a,N,N*2);
+//        } else {
+//            swap(a,N,N*2+1);
+//        }
+//    }
+	//cout << "your code here\n";
 }
 
 int grow(Key * a, Key key, int N) {
 
-	cout << "your code here\n";
+	//cout << "your code here\n";
+    a[++N] = key;
+    swim(a,N,N);
 
 	return N;
 }
@@ -110,10 +147,10 @@ void show(Key * a, int N) {
 
 // The first element(a[0]) is excluded.
 int main(int argc, char* argv[]) {
-#if 1
+#if 0
 	char a[] = { ' ', 'H', 'A', 'P', 'P', 'Y', 'C', 'O', 'D', 'I', 'N', 'G', NULL };
 	int N = sizeof(a) / sizeof(a[0]) - 2;   // -2 because of 1st ' ' and last NULL.
-#else // 학번넣어서 테스트할때는 if 0 만들고 이거쓰기!
+#else
 	char a[1024], line[1024];
 	if (argc < 2) {
 		cout << "Enter a word to sort: ";
