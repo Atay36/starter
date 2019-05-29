@@ -65,7 +65,7 @@ void heapprint_mode(heap hp, int mode) {
 		heapprint_levelorder(hp);
 	}
 }
-# if 0
+# if 1
 int main(int argc, char* argv[]) {
 	string menuMax = "Max Heap(Priority Queue): ";
 	string menuMin = "Min Heap(Priority Queue): ";
