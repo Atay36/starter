@@ -11,6 +11,7 @@
 		65FD1ED9229A6F05005A2B25 /* heap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65FD1ED5229A6F05005A2B25 /* heap.cpp */; };
 		65FD1EDA229A6F05005A2B25 /* heapDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65FD1ED6229A6F05005A2B25 /* heapDriver.cpp */; };
 		65FD1EDE229A6F2D005A2B25 /* libnowic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FD1EDD229A6F2D005A2B25 /* libnowic.a */; };
+		65FD1EE0229FADD0005A2B25 /* treeprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65FD1EDF229FADD0005A2B25 /* treeprint.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,6 +33,7 @@
 		65FD1ED6229A6F05005A2B25 /* heapDriver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = heapDriver.cpp; path = ../heapDriver.cpp; sourceTree = "<group>"; };
 		65FD1ED7229A6F05005A2B25 /* heapsort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = heapsort.cpp; path = ../heapsort.cpp; sourceTree = "<group>"; };
 		65FD1EDD229A6F2D005A2B25 /* libnowic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnowic.a; path = ../../../lib/libnowic.a; sourceTree = "<group>"; };
+		65FD1EDF229FADD0005A2B25 /* treeprint.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = treeprint.cpp; path = ../treeprint.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +51,7 @@
 		65FD1EC1229A6E3F005A2B25 = {
 			isa = PBXGroup;
 			children = (
+				65FD1EDF229FADD0005A2B25 /* treeprint.cpp */,
 				65FD1ED5229A6F05005A2B25 /* heap.cpp */,
 				65FD1ED6229A6F05005A2B25 /* heapDriver.cpp */,
 				65FD1ED4229A6F05005A2B25 /* heapprint.cpp */,
@@ -138,6 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65FD1EE0229FADD0005A2B25 /* treeprint.cpp in Sources */,
 				65FD1EDA229A6F05005A2B25 /* heapDriver.cpp in Sources */,
 				65FD1ED8229A6F05005A2B25 /* heapprint.cpp in Sources */,
 				65FD1ED9229A6F05005A2B25 /* heap.cpp in Sources */,

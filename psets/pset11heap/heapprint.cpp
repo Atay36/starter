@@ -1,3 +1,6 @@
+/*Include the following line at the top of your every file with your name signed.
+ On my honour, I pledge that I have neither received nor provided improper assistance in the completion of this assignment. Signed: lee yeeun*/
+
 /**
 * File: heapprint.cpp
 *	converts a heap data structure in an array into a complete
@@ -37,9 +40,62 @@ void heapprint(heap p) {
 	DPRINT(std::cout << ">heapprint\n";);
 	if (empty(p)) return;
 
-	std::cout << "your code here\n";
+	//std::cout << "your code here\n";
+    tree root = new TreeNode(p->nodes[1]); 
+    tree temp = root;
+    std::queue<tree> que;  // using stl
+    que.push(root);
+    
+    int i = 1;
+    
+    while(!que.empty()){
+        root=que.front();
 
-	// treeprint(root);
+        if (i < p->N)
+        {
+            root->left = new TreeNode(p->nodes[++i]); //EnQueue
+            que.push(root->left);
+        }
+        if(i < p->N)
+        {
+            root->right = new TreeNode(p->nodes[++i]); //EnQueue
+            que.push(root->right);
+        }
+        que.pop();
+      //  root=que.front();
+
+       // treeprint(root);
+
+    }
+    
+    
+    /*
+     A.Get a next key from the CBT and make a new node
+     
+     B. Get the front node in the queue.
+     C. If the left child of this front node doesnÕt exist,
+     set the left child as the new node.
+     else if the right child of this front node doesnÕt exist,
+     set the right child as the new node.
+     D. If the front node has both the left child and right child, dequeue it.
+     E. enqueue the new node.
+     */
+    /*
+    while(!que.empty()){
+        temp=que.front();
+        que.pop();
+        v.push_back(temp->key);  //process node
+        
+        if(temp->left)
+            que.push(temp->left); //EnQueue
+        if(temp->right)
+            que.push(temp->right); //EnQueue
+        
+    }
+    */
+    root = temp;
+    treeprint(root);
+    //tree root = *p;
 
 	// treeprint_levelorder(root);  // may use this instead of heapprint_levelorder()
 	DPRINT(std::cout << "<heapprint\n";);
