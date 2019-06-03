@@ -64,6 +64,10 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "graph6.txt"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "antenna.txt"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
