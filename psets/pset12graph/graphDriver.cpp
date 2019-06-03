@@ -287,6 +287,8 @@ int main(int argc, const char **argv) {
                     break;
                 }
                 
+                BFSpath(g, v, w, path);
+                DFSpath(g, v, w, path);
                 cout << "your code here \n";
                 
                 
