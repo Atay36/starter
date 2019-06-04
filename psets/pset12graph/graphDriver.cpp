@@ -92,22 +92,26 @@ using namespace std;
 void cyclic_check() {
     graph g = new Graph(5);
     
-    stack<int> cy;
+    addEdge(g, 0, 1);
+    addEdge(g, 0, 3);
+    addEdge(g, 1, 2);
+    addEdge(g, 2, 3);
+    addEdge(g, 3, 4);
     
-    // invoke print_adjlist()
     print_adjlist(g);
     
-    // invoke cyclic() and print the result as shown in main()
-    /*
+    stack<int> cy;
+    cout << "\tCycle :";
     if (cyclic(g, cy)) {
         while (!cy.empty()) {
             cout << cy.top() << " ";
             cy.pop();
         }
     }
-*/
     
-    //cyclic(g,cy);
+    // invoke print_adjlist()
+    print_result(g);
+    // invoke cyclic() and print the result as shown in main()
     
     // clear graph
     clear(g);
@@ -141,6 +145,21 @@ bool bigraph_check(graph g) {         // graph5~9.txt are bigraphs.
     
     // check the validity of two-coloring which is saved in g->color[].
     cout << "your code here \n";
+    stack<int> cy;
+    if (cyclic(g, cy)) {
+        while (!cy.empty()) {
+            cout << cy.top() << " ";
+            cy.pop();
+        }
+    }
+
+    //cy = {};
+    for (int v = 0; v < V(g); v++) {
+        if (!g->marked[v]) {
+           // if (!DFSbigraph(g, v))
+                return false; // found an odd-length cycle
+        // clear stack
+    } }
     
     DPRINT(cout << "<bigraph_check true\n";);
     return true;
@@ -286,12 +305,29 @@ int main(int argc, const char **argv) {
                     cout << "\t(" << v << ", " << w << ") are not conencted.\n";
                     break;
                 }
-                
+                /*
                 BFSpath(g, v, w, path);
                 DFSpath(g, v, w, path);
+                print_BFS(g);
+                print_DFS(g);
                 cout << "your code here \n";
+                */
                 
+                DFSpath(g, v, w, path);
+                cout << "\tDFS path[" << v << ".." << w << "] :";
+                while (!path.empty()) {
+                    cout << path.top() << " ";
+                    path.pop();
+                }
                 
+                BFSpath(g, v, w, path);
+                cout << "\n";
+                cout << "\tBFS path[" << v << ".." << w << "] :";
+                while (!path.empty()) {
+                    cout << path.top() << " ";
+                    path.pop();
+                }
+
                 break;
                 
             case 'c':
@@ -355,17 +391,19 @@ int main(int argc, const char **argv) {
     
     //cyclic(g,cy);
     //cyclic_check();
-    print_adjlist(g);
+    //print_adjlist(g);
     cout << "\tCycle: ";
-    if (cyclic(g, cy)) {
-        while (!cy.empty()) {
-            cout << cy.top() << " ";
-            cy.pop();
-        }
-        print_result(g);
+//    if (cyclic(g, cy)) {
+//        while (!cy.empty()) {
+//            cout << cy.top() << " ";
+//            cy.pop();
+//          }
+//        }
+        //print_result(g);
         clear(g);
+        cyclic_check();
     
     cout << "\tJoyful Coding~~\n";
 }
 
-}
+
