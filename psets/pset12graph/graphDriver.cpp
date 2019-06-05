@@ -101,6 +101,7 @@ void cyclic_check() {
     print_adjlist(g);
     
     stack<int> cy;
+    queue<int> q;
     cout << "\tCycle :";
     if (cyclic(g, cy)) {
         while (!cy.empty()) {
@@ -108,9 +109,16 @@ void cyclic_check() {
             cy.pop();
         }
     }
+    cout << endl;
     
     // invoke print_adjlist()
-    print_result(g);
+    DFS(g,0,q);
+    print_DFS(g);
+    
+    BFS(g,0);
+    print_BFS(g);
+    
+    //print_result(g);
     // invoke cyclic() and print the result as shown in main()
     
     // clear graph
@@ -121,13 +129,20 @@ void cyclic_check() {
 // runs two-coloring using DFS recursively
 void DFSbigraph(graph g, int v) {    // DFS
     DPRINT(cout << ">DFSbigraph visits v=" << v << " color=" << g->color[v] << endl;);
+    if(g->marked[v] == true) return;
     g->marked[v] = true;            // v is visited now
     
     for (gnode w = g->adj[v].next; w; w = w->next) {// runs for [v]'s vertices
+        if(!g->marked[w->item]) {
+            g->color[w->item] = !g->color[v];
+            g->marked[w->item]=true;
+        }
+        //DFSbigraph(g, v);
         // if the vertex is not visited
         // flip the color !g->color[v]
         DPRINT(cout << "  set vertex=" << w->item << " color=" << !g->color[v] << endl;);
         // recur DFSbigraph() at the vertex
+        DFSbigraph(g, v++);
     }
 }
 
@@ -142,9 +157,19 @@ bool bigraph_check(graph g) {         // graph5~9.txt are bigraphs.
     for (int v = 0; v < V(g); v++) g->marked[v] = false;
     g->color[0] = BLACK;    // set starting at v=0, BLACK=0, WHITE=1
     DFSbigraph(g, 0);        // DFS starting at v=0
-    
+//    for (int v = 1; v < V(g); v++){
+//        DFSbigraph(g, v);
+//    }
     // check the validity of two-coloring which is saved in g->color[].
+    for (int v = 0; v < V(g); v++){
+        for (gnode w = g->adj[v].next; w; w = w->next) {// runs for [v]'s vertices
+            if(g->color[w->item] == g->color[v]) {
+                return false;
+            }
+        }
+    }
     cout << "your code here \n";
+        /*
     stack<int> cy;
     if (cyclic(g, cy)) {
         while (!cy.empty()) {
@@ -152,6 +177,7 @@ bool bigraph_check(graph g) {         // graph5~9.txt are bigraphs.
             cy.pop();
         }
     }
+         */
 
     //cy = {};
     for (int v = 0; v < V(g); v++) {
@@ -164,6 +190,7 @@ bool bigraph_check(graph g) {         // graph5~9.txt are bigraphs.
     DPRINT(cout << "<bigraph_check true\n";);
     return true;
 }
+
 
 // a helper function to get a valid vertex number
 int getVertex(graph g) {
