@@ -173,7 +173,7 @@ bool bigraph_check(graph g) {         // graph5~9.txt are bigraphs.
             }
         }
     }
-    cout << "your code here \n";
+    //cout << "your code here \n";
         /*
     stack<int> cy;
     if (cyclic(g, cy)) {
