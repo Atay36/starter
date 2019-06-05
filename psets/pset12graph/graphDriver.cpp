@@ -128,21 +128,26 @@ void cyclic_check() {
 /*********************** pset-graph step 4 ****************************/
 // runs two-coloring using DFS recursively
 void DFSbigraph(graph g, int v) {    // DFS
-    DPRINT(cout << ">DFSbigraph visits v=" << v << " color=" << g->color[v] << endl;);
-    if(g->marked[v] == true) return;
-    g->marked[v] = true;            // v is visited now
+    DPRINT(cout << ">DFSbigraph visits v=" << v << " color=" << g->color[v] << " marked? = "<<g->marked[v] << endl;);
+    //if(g->marked[v] == true) return;
+    //g->marked[v] = true;            // v is visited now
     
     for (gnode w = g->adj[v].next; w; w = w->next) {// runs for [v]'s vertices
         if(!g->marked[w->item]) {
             g->color[w->item] = !g->color[v];
             g->marked[w->item]=true;
-        }
+            
+        } else continue;
+        DFSbigraph(g, w->item);
+//        } else {
+//            DFSbigraph(g, w->next->item);
+//        }
         //DFSbigraph(g, v);
         // if the vertex is not visited
         // flip the color !g->color[v]
         DPRINT(cout << "  set vertex=" << w->item << " color=" << !g->color[v] << endl;);
         // recur DFSbigraph() at the vertex
-        DFSbigraph(g, v++);
+        //DFSbigraph(g, v++);
     }
 }
 
