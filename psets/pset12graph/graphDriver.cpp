@@ -419,19 +419,6 @@ int main(int argc, const char **argv) {
         }
     } while (c != 'q');
     
-    //print_adjlist(g);
-    
-    //cyclic(g,cy);
-    //cyclic_check();
-    //print_adjlist(g);
-    cout << "\tCycle: ";
-//    if (cyclic(g, cy)) {
-//        while (!cy.empty()) {
-//            cout << cy.top() << " ";
-//            cy.pop();
-//          }
-//        }
-        //print_result(g);
         clear(g);
         cyclic_check();
     
