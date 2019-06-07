@@ -337,13 +337,6 @@ int main(int argc, const char **argv) {
                     cout << "\t(" << v << ", " << w << ") are not conencted.\n";
                     break;
                 }
-                /*
-                BFSpath(g, v, w, path);
-                DFSpath(g, v, w, path);
-                print_BFS(g);
-                print_DFS(g);
-                cout << "your code here \n";
-                */
                 
                 DFSpath(g, v, w, path);
                 cout << "\tDFS path[" << v << ".." << w << "] :";
